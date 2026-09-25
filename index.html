@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, connectFirestoreEmulator } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // 1. Lee la configuración desde las variables de entorno de Vite
+    const firebaseConfig = {
+        projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 2. Conecta al emulador solo si VITE_USE_EMULATOR es "true"
+    if (import.meta.env.VITE_USE_EMULATOR === 'true') {
+        const port = Number(import.meta.env.VITE_FIREBASE_EMULATOR_PORT) || 8080;
+        connectFirestoreEmulator(db, '127.0.0.1', port);
+    }
+    </script>
